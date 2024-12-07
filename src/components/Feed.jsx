@@ -7,8 +7,8 @@ const Feed = () => {
     {
       id: 1,
       title: 'Chit 1',
-      winner: 'Johny',
-      prizeAmount: '1000',
+      winner: 'John Doe',
+      prizeAmount: '$1000',
       period: '6 months',
       participants: 10,
       deadline: '2023-05-05',
@@ -16,8 +16,8 @@ const Feed = () => {
     {
       id: 2,
       title: 'Chit 2',
-      winner: 'Joseph',
-      prizeAmount: '2000',
+      winner: 'Jane Doe',
+      prizeAmount: '$2000',
       period: '6 months',
       participants: 20,
       deadline: '2023-05-04',

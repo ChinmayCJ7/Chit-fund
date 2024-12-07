@@ -116,22 +116,23 @@ const Home = () => {
       <div style={{ padding: '20px' }}>
         <h1 style={{ fontSize: '24px', fontWeight: 'bold', marginBottom: '20px' }}>All Chits</h1>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px' }}>
-          {Array.isArray(fetchCreatedChits?.formattedChits) && fetchCreatedChits.formattedChits.length > 0 ? (
-            fetchCreatedChits.formattedChits.map((post) => (
+          {console.log("Rendering formattedChits:", formattedChits)}
+          {formattedChits.length > 0 ? (
+            formattedChits.map((post) => (
               <Card
                 key={post.id}
                 id={post.id}
                 clickJoin={clickJoin}
                 title={post.title}
                 desc={post.desc}
-                people={post.participants}
+                people={post.people}
                 amount={post.total}
                 by={post.by}
                 initial={post.initialInstallment}
               />
             ))
           ) : (
-            <p>No chits available.</p>
+            <p>No formatted chits available.</p>
           )}
         </div>
       </div>

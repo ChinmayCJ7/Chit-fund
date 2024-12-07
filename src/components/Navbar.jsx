@@ -48,7 +48,7 @@ sm:items-stretch sm:justify-start">
 
                   <div className="flex space-x-6">
                     <Link to='/'><h1 className="text-2xl font-bold
-text-blue-800">ChitFund</h1></Link>
+text-blue-800">DeFund</h1></Link>
                     {navigation.map((item) => (
                       <Link
                         key={item.name}

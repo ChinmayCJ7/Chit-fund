@@ -18,21 +18,35 @@ export const AppContextProvider = ({ children }) => {
 
   // Connect wallet and setup contract
   const connectWallet = useCallback(async () => {
-    if (window.ethereum) {
+    try {
+      // Check if MetaMask (or compatible wallet) is available
+      if (!window.ethereum) {
+        alert('Please install MetaMask!');
+        return;
+      }
+
+      // Request account access
+      await window.ethereum.request({ method: 'eth_requestAccounts' });
+
+      // Create an Ethereum provider and signer
       const ethProvider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = ethProvider.getSigner();
-      const address = await signer.getAddress();
-      setWalletAddress(address);
-      setProvider(ethProvider);
 
-      // Initialize contract
+      // Get the connected wallet address
+      const address = await signer.getAddress();
+      setWalletAddress(address); // Update wallet address state
+      setProvider(ethProvider); // Update provider state
+
+      // Initialize the contract
       const chitContract = new ethers.Contract(deployedAddress, chitAbi, signer);
-      setContract(chitContract);
+      setContract(chitContract); // Update contract state
       setLoadingContract(false); // Contract is now initialized
-    } else {
-      alert('Please install MetaMask!');
+    } catch (error) {
+      console.error('Error connecting wallet or initializing contract:', error);
+      alert('Failed to connect wallet. Please try again.');
     }
-  }, []);
+  }, [deployedAddress, chitAbi]); // Add dependencies for useCallback
+
 
   // Create a new chit
   const createNewChit = useCallback(
