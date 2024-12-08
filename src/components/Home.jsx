@@ -3,11 +3,9 @@ import Navbar from './Navbar';
 import Footer from './Footer';
 import { useAppContext } from './Context';
 
-
 // Component to display user-created or participated chit details
 const MyChit = ({ id, title, desc, people, amount, by, initial, paid }) => {
   const { sendETH } = useAppContext();
-
 
   return (
     <div style={{ width: '288px', padding: '15px', margin: '10px', borderRadius: '15px', backgroundColor: '#f8f9fa' }}>
@@ -17,25 +15,25 @@ const MyChit = ({ id, title, desc, people, amount, by, initial, paid }) => {
         <p style={{ fontWeight: 'bold', color: '#b2b3bd' }}>{amount} ETH</p>
         <p style={{ marginTop: '3px', fontSize: '14px', color: '#808191' }}>Total: {amount * people}</p>
         <p style={{ marginTop: '3px', fontSize: '14px', color: '#808191' }}>
-          Initial: {initial ? "✔️" : "❌"}
+          Initial: {initial ? '✔️' : '❌'}
         </p>
       </div>
       <p style={{ marginTop: '10px', fontSize: '12px', color: '#808191' }}>
         by {by?.slice(0, 6)}...{by?.slice(-4)}
       </p>
       <button
-        onClick={sendETH}
+        onClick={() => clickJoin(id)}
         style={{
           marginTop: '10px',
           padding: '8px 15px',
-          backgroundColor: paid ? '#4caf50' : '#007bff',
+          backgroundColor: '#007bff',
           color: '#fff',
           border: 'none',
           borderRadius: '5px',
           cursor: 'pointer',
         }}
       >
-        {paid ? "Paid" : "Pay"}
+        Join
       </button>
     </div>
   );
@@ -51,7 +49,7 @@ const Card = ({ id, clickJoin, title, desc, people, amount, by, initial }) => {
         <p style={{ fontWeight: 'bold', color: '#b2b3bd' }}>{amount} ETH</p>
         <p style={{ marginTop: '3px', fontSize: '14px', color: '#808191' }}>Total: {amount * people}</p>
         <p style={{ marginTop: '3px', fontSize: '14px', color: '#808191' }}>
-          Initial: {initial ? "✔️" : "❌"}
+          Initial: {initial ? '✔️' : '❌'}
         </p>
       </div>
       <p style={{ marginTop: '10px', fontSize: '12px', color: '#808191' }}>
@@ -91,20 +89,21 @@ const Home = () => {
 
   useEffect(() => {
     if (contract) {
-      console.log("Contract initialized:", contract);
+      console.log('Contract initialized:', contract);
       fetchCreatedChits();
       fetchUserChits();
       getMyChits();
     } else {
-      console.warn("Contract not initialized.");
+      console.warn('Contract not initialized.');
     }
   }, [contract, fetchCreatedChits, fetchUserChits, getMyChits]);
 
   useEffect(() => {
-    console.log("Chits:", chits);
-    console.log("My Chits:", myChits);
-    console.log("Created Chits:", createdChits);
-  }, [chits, myChits, createdChits]);
+    console.log('Chits:', chits);
+    console.log('My Chits:', myChits);
+    console.log('Created Chits:', createdChits);
+    console.log('Formatted Chits:', formattedChits);
+  }, [chits, myChits, createdChits, formattedChits]);
 
   const clickJoin = (id) => {
     joinTheChit(id);
@@ -116,7 +115,6 @@ const Home = () => {
       <div style={{ padding: '20px' }}>
         <h1 style={{ fontSize: '24px', fontWeight: 'bold', marginBottom: '20px' }}>All Chits</h1>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px' }}>
-          {console.log("Rendering formattedChits:", formattedChits)}
           {formattedChits.length > 0 ? (
             formattedChits.map((post) => (
               <Card
